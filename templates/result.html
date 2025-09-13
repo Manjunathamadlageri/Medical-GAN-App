@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Image</title>
+</head>
+<body>
+    <h1>Generated Synthetic Medical Image</h1>
+    <img src="/{{ gen_img }}" alt="Generated Image" width="256"><br>
+    <p><b>FID:</b> {{ fid }}</p>
+    <p><b>SSIM:</b> {{ ssim }}</p>
+    <a href="{{ url_for('download_file', filename=gen_img.split('/')[-1]) }}">Download Image</a>
+    <br><br>
+    <h2>Uploaded Image Details</h2>
+    <table border="1">
+      {% for key, value in metadata.items() %}
+        {% if key != "EXIF" %}
+          <tr>
+            <td><b>{{ key }}</b></td>
+            <td>{{ value }}</td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+      {% if metadata.EXIF %}
+        <tr>
+          <td><b>EXIF Metadata</b></td>
+          <td>
+            <ul>
+            {% for tag, val in metadata.EXIF.items() %}
+              <li><b>{{ tag }}:</b> {{ val }}</li>
+            {% endfor %}
+            </ul>
+          </td>
+        </tr>
+      {% endif %}
+    </table>
+    <br>
+    <h2>Detected Health Issue</h2>
+    <ul>
+      <li><b>Disease Type:</b> {{ health_issue.disease }}</li>
+      <li><b>Confidence:</b> {{ '%.2f'|format(health_issue.confidence*100) }}%</li>
+      <li><b>Affected Region:</b> {{ health_issue.region }}</li>
+      <li><b>Severity:</b> {{ health_issue.severity }}</li>
+      <li><b>Clinical Description:</b> {{ health_issue.description }}</li>
+    </ul>
+    <br><a href="{{ url_for('index') }}">Generate Another</a>
+</body>
+</html>

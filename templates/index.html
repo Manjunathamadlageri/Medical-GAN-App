@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GAN Medical Image Generator</title>
+</head>
+<body>
+    <h1>Upload Medical Image & Generate Synthetic Image</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="image">Select Image:</label>
+        <input type="file" name="image" required><br><br>
+        <label for="disease">Select Disease Condition:</label>
+        <select name="disease" required>
+            <option value="tumor">Tumor</option>
+            <option value="pneumonia">Pneumonia</option>
+            <option value="normal">Normal</option>
+        </select><br><br>
+        <input type="submit" value="Generate">
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
